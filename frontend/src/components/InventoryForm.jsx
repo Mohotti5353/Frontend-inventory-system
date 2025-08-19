@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import axios from "axios"; 
+import { useNavigate } from "react-router-dom";
 
 const InventoryForm = () => {
   const [fuelData, setFuelData] = useState({
@@ -9,7 +10,7 @@ const InventoryForm = () => {
     pricePerLiter: "",
     supplier: "",
   });
-
+const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -18,21 +19,25 @@ const InventoryForm = () => {
   };
 
   const handleAdd = async () => {
-    try {
-      setLoading(true);
-      setMessage("");
-      const response = await axios.post("http://localhost:5000/api/inventory", fuelData);
-      console.log("Response:", response.data);
-      
-      setMessage("Fuel added successfully!");
-      setFuelData({ fuelType: "", quantityLiters: "", pricePerLiter: "", supplier: "" });
-    } catch (error) {
-      console.error("Error adding fuel:", error);
-      setMessage("Failed to add fuel.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    setLoading(true);
+    setMessage("");
+    const response = await axios.post("http://localhost:5000/api/inventory", fuelData);
+    console.log("Response:", response.data);
+
+    setMessage("Fuel added successfully!");
+    setFuelData({ fuelType: "", quantityLiters: "", pricePerLiter: "", supplier: "" });
+
+    // ✅ Navigate to InventoryTable after successful add
+    navigate("/inventory-table");
+  } catch (error) {
+    console.error("Error adding fuel:", error);
+    setMessage("Failed to add fuel.");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">

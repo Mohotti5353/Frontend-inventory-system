@@ -1,18 +1,14 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Routes, Route } from "react-router-dom";
 import InventoryForm from "./components/InventoryForm";
+import InventoryTable from "./components/InventoryTable";
 
 function App() {
-
   return (
-    <>
-    <div>
-      <InventoryForm />
-    </div>
-    </>
-  )
+    <Routes>
+      <Route path="/" element={<InventoryForm />} />
+      <Route path="/inventory-table" element={<InventoryTable />} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;
