@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function InventoryTable() {
   const [items, setItems] = useState([]);
+  const location = useLocation(); // to receive state from navigate
+  const navigate = useNavigate(); // for navigation
 
-  // Fetch all fuel items from backend
   const fetchItems = async () => {
     try {
       const response = await axios.get("http://localhost:5000/api/inventory");
-      setItems(response.data); // assuming backend returns array of items
+      setItems(response.data);
     } catch (error) {
       console.error("Error fetching fuel items:", error);
     }
@@ -16,7 +18,12 @@ function InventoryTable() {
 
   useEffect(() => {
     fetchItems();
-  }, []);
+
+    // Add newly added item if coming from form
+    if (location.state && location.state.newItem) {
+      setItems((prev) => [...prev, location.state.newItem]);
+    }
+  }, [location.state]);
 
   const handleDelete = async (id) => {
     try {
@@ -28,15 +35,23 @@ function InventoryTable() {
   };
 
   const handleEdit = (item) => {
-    // Optional: implement edit logic or navigate to edit page
     alert(`Edit ${item.fuelType}`);
   };
 
   return (
     <div className="max-w-5xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
-      {/* ✅ Page title */}
-      <h1 className="text-3xl font-bold mb-6 text-center">Inventory Dashboard</h1>
+      {/* Header with title and ADD button */}
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold">Inventory Dashboard</h1>
+        <button
+          onClick={() => navigate("/")} // navigate to InventoryForm
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+        >
+          ADD
+        </button>
+      </div>
 
+      
       <table className="w-full border-collapse border border-gray-300 shadow-md">
         <thead className="bg-gray-200">
           <tr>
@@ -85,4 +100,3 @@ function InventoryTable() {
 }
 
 export default InventoryTable;
-
