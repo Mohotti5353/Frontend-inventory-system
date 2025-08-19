@@ -1,5 +1,6 @@
-// src/components/InventoryForm.jsx
+
 import { useState } from "react";
+import axios from "axios"; 
 
 const InventoryForm = () => {
   const [fuelData, setFuelData] = useState({
@@ -9,13 +10,28 @@ const InventoryForm = () => {
     supplier: "",
   });
 
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
   const handleChange = (e) => {
     setFuelData({ ...fuelData, [e.target.name]: e.target.value });
   };
 
-  const handleAdd = () => {
-    console.log("Fuel Data Added:", fuelData);
-    setFuelData({ fuelType: "", quantityLiters: "", pricePerLiter: "", supplier: "" });
+  const handleAdd = async () => {
+    try {
+      setLoading(true);
+      setMessage("");
+      const response = await axios.post("http://localhost:5000/api/inventory", fuelData);
+      console.log("Response:", response.data);
+      
+      setMessage("Fuel added successfully!");
+      setFuelData({ fuelType: "", quantityLiters: "", pricePerLiter: "", supplier: "" });
+    } catch (error) {
+      console.error("Error adding fuel:", error);
+      setMessage("Failed to add fuel.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -41,6 +57,7 @@ const InventoryForm = () => {
           value={fuelData.quantityLiters}
           onChange={handleChange}
           className="w-full border border-gray-300 p-2 rounded"
+           min="1"
         />
       </div>
 
@@ -52,6 +69,7 @@ const InventoryForm = () => {
           value={fuelData.pricePerLiter}
           onChange={handleChange}
           className="w-full border border-gray-300 p-2 rounded"
+           min="1"
         />
       </div>
 
@@ -68,10 +86,13 @@ const InventoryForm = () => {
 
       <button
         onClick={handleAdd}
-        className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition"
+        disabled={loading}
+        className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition disabled:opacity-50"
       >
-        ADD
+        {loading ? "Adding..." : "ADD"}
       </button>
+
+      {message && <p className="mt-3 text-center text-green-600">{message}</p>}
     </div>
   );
 };
