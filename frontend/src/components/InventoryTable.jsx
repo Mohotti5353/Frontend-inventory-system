@@ -4,6 +4,8 @@ import axios from "axios";
 
 function InventoryTable() {
   const [items, setItems] = useState([]);
+   const [editingId, setEditingId] = useState(null); // track row being edited
+  const [editData, setEditData] = useState({});
   const location = useLocation(); // to receive state from navigate
   const navigate = useNavigate(); // for navigation
 
@@ -35,7 +37,8 @@ function InventoryTable() {
   };
 
   const handleEdit = (item) => {
-    alert(`Edit ${item.fuelType}`);
+    // Navigate to EditForm and pass item as state
+    navigate("/edit-form", { state: { item } });
   };
 
   return (
