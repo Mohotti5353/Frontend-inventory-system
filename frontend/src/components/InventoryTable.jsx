@@ -4,10 +4,10 @@ import axios from "axios";
 
 function InventoryTable() {
   const [items, setItems] = useState([]);
-   const [editingId, setEditingId] = useState(null); // track row being edited
+   const [editingId, setEditingId] = useState(null);
   const [editData, setEditData] = useState({});
-  const location = useLocation(); // to receive state from navigate
-  const navigate = useNavigate(); // for navigation
+  const location = useLocation(); 
+  const navigate = useNavigate(); 
 
   const fetchItems = async () => {
     try {
@@ -21,7 +21,7 @@ function InventoryTable() {
   useEffect(() => {
     fetchItems();
 
-    // Add newly added item if coming from form
+    
     if (location.state && location.state.newItem) {
       setItems((prev) => [...prev, location.state.newItem]);
     }
@@ -37,17 +37,17 @@ function InventoryTable() {
   };
 
   const handleEdit = (item) => {
-    // Navigate to EditForm and pass item as state
+    
     navigate("/edit-form", { state: { item } });
   };
 
   return (
     <div className="max-w-5xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
-      {/* Header with title and ADD button */}
+    
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Inventory Dashboard</h1>
         <button
-          onClick={() => navigate("/")} // navigate to InventoryForm
+          onClick={() => navigate("/inventory-table")} 
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
         >
           ADD

@@ -22,7 +22,7 @@ function EditForm() {
         editData
       );
       setMessage("Updated successfully!");
-      navigate("/inventory-table"); 
+      navigate("/"); 
     } catch (error) {
       console.error("Error updating item:", error);
       setMessage("Failed to update item.");

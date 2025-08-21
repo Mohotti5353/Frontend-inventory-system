@@ -29,7 +29,7 @@ const navigate = useNavigate();
     setFuelData({ fuelType: "", quantityLiters: "", pricePerLiter: "", supplier: "" });
 
    
-    navigate("/inventory-table");
+    navigate("/");
   } catch (error) {
     console.error("Error adding fuel:", error);
     setMessage("Failed to add fuel.");

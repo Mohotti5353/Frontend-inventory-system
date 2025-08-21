@@ -6,11 +6,11 @@ import EditForm from "./components/EditForm";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<InventoryForm />} />
-      <Route path="/inventory-table" element={<InventoryTable />} />
+      <Route path="/" element={< InventoryTable/>} />
+      <Route path="/inventory-table" element={<InventoryForm />} />
       <Route path="/edit-form" element={<EditForm />} />
     </Routes>
   );
 }
-
+ 
 export default App;
