@@ -28,7 +28,7 @@ const navigate = useNavigate();
     setMessage("Fuel added successfully!");
     setFuelData({ fuelType: "", quantityLiters: "", pricePerLiter: "", supplier: "" });
 
-    // ✅ Navigate to InventoryTable after successful add
+   
     navigate("/inventory-table");
   } catch (error) {
     console.error("Error adding fuel:", error);
