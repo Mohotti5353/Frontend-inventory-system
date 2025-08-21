@@ -5,7 +5,7 @@ import axios from "axios";
 function EditForm() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { item } = location.state; // get the item passed from InventoryTable
+  const { item } = location.state; 
   const [editData, setEditData] = useState({ ...item });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -22,7 +22,7 @@ function EditForm() {
         editData
       );
       setMessage("Updated successfully!");
-      navigate("/inventory-table"); // go back to table
+      navigate("/inventory-table"); 
     } catch (error) {
       console.error("Error updating item:", error);
       setMessage("Failed to update item.");
